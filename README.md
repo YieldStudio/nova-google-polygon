@@ -9,7 +9,7 @@ This package allows you to add a Google Map polygon editor on your Laravel Nova 
 
 ## Requirements
 
-- PHP **8.0+**
+- PHP **8.1+**
 - Laravel Nova **4.0+**
 - Laravel Framework **8.0+**
 
