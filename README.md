@@ -5,7 +5,7 @@
 
 This package allows you to add a Google Map polygon editor on your Laravel Nova resources.
 
-![screenshot](https://raw.githubusercontent.com/yieldstudio/nova-google-polygon/main/screenshot.gif)
+![screenshot](https://raw.githubusercontent.com/YieldStudio/nova-google-polygon/main/screenshot.gif)
 
 ## Requirements
 
