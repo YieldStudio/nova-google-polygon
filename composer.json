@@ -27,11 +27,17 @@
     ],
     "require": {
         "php": "^8.0",
-        "laravel/nova": "^4.0"
+        "laravel/nova": "^4.0",
+        "illuminate/support": "^8|^9"
     },
     "autoload": {
         "psr-4": {
             "YieldStudio\\NovaGooglePolygon\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "YieldStudio\\NovaGooglePolygon\\Tests\\": "tests"
         }
     },
     "extra": {
@@ -45,11 +51,16 @@
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.8"
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "pestphp/pest": "^1.21",
+        "phpunit/phpunit": "^9.1"
     }
 }
