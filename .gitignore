@@ -4,7 +4,6 @@
 /build
 composer.phar
 composer.lock
-phpunit.xml
 .phpunit.result.cache
 mix-manifest.json
 .php_cs.cache
