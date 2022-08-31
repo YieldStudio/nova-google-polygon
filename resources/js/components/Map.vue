@@ -19,11 +19,11 @@
 </style>
 
 <script>
-import loadGoogleMapsApi from "load-google-maps-api";
+import loadGoogleMapsApi from 'load-google-maps-api';
 
 export default {
     props: ['value', 'center', 'shapeOptions', 'readonly'],
-    data: function () {
+    data: function() {
         return {
             ready: false,
             map: null,
@@ -34,12 +34,12 @@ export default {
     },
     methods: {
         watchShape() {
-            const {google} = window;
+            const { google } = window;
 
             // Hide drawing manager
             this.drawingManager.setMap(null);
 
-            this.shape.addListener("rightclick", (e) => {
+            this.shape.addListener('rightclick', e => {
                 if (e.vertex != null) {
                     this.shape.getPath().removeAt(e.vertex);
                 }
@@ -54,10 +54,10 @@ export default {
                 }
             });
 
-            this.shape.getPaths().forEach((path) => {
-                google.maps.event.addListener(path, "insert_at", () => this.syncValue());
-                google.maps.event.addListener(path, "remove_at", () => this.syncValue());
-                google.maps.event.addListener(path, "set_at", () => this.syncValue());
+            this.shape.getPaths().forEach(path => {
+                google.maps.event.addListener(path, 'insert_at', () => this.syncValue());
+                google.maps.event.addListener(path, 'remove_at', () => this.syncValue());
+                google.maps.event.addListener(path, 'set_at', () => this.syncValue());
             });
         },
         syncValue() {
@@ -81,7 +81,7 @@ export default {
             this.updateValue(value);
         },
         refreshMap() {
-            const {google} = window;
+            const { google } = window;
 
             if (this.shape) {
                 // Destroy shape
@@ -109,7 +109,7 @@ export default {
                 this.shape = new google.maps.Polygon({
                     paths: this.value,
                     map: this.map,
-                    ...this.shapeOptions
+                    ...this.shapeOptions,
                 });
 
                 this.map.fitBounds(bounds);
@@ -122,12 +122,12 @@ export default {
         },
         updateValue(value) {
             this.localValue = value;
-            this.$emit('change', value)
+            this.$emit('change', value);
         },
     },
     watch: {
         value(newValue) {
-            if (!this.ready){
+            if (!this.ready) {
                 return;
             }
 
@@ -135,27 +135,24 @@ export default {
                 this.localValue = newValue;
                 this.refreshMap();
             }
-        }
+        },
     },
     async mounted() {
         await loadGoogleMapsApi({
             key: Nova.config('googlePolygon').key,
-            libraries: ["places", "drawing", "geometry"],
+            libraries: ['places', 'drawing', 'geometry'],
         });
 
-        const {google} = window;
+        const { google } = window;
 
-        this.map = new google.maps.Map(
-            this.$refs.map,
-            {
-                zoom: 12,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                center: new google.maps.LatLng(this.center),
-                mapTypeControl: false,
-                streetViewControl: false,
-                clickableIcons: false,
-            }
-        );
+        this.map = new google.maps.Map(this.$refs.map, {
+            zoom: 12,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: new google.maps.LatLng(this.center),
+            mapTypeControl: false,
+            streetViewControl: false,
+            clickableIcons: false,
+        });
 
         this.drawingManager = new google.maps.drawing.DrawingManager({
             drawingMode: null,
@@ -167,15 +164,11 @@ export default {
             polygonOptions: this.shapeOptions,
         });
 
-        google.maps.event.addListener(
-            this.drawingManager,
-            "overlaycomplete",
-            (event) => {
-                this.shape = event.overlay;
-                this.watchShape();
-                this.syncValue();
-            }
-        );
+        google.maps.event.addListener(this.drawingManager, 'overlaycomplete', event => {
+            this.shape = event.overlay;
+            this.watchShape();
+            this.syncValue();
+        });
 
         this.refreshMap();
 

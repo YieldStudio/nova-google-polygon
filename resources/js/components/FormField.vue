@@ -1,38 +1,40 @@
 <template>
     <DefaultField :field="field" :errors="errors" :show-help-text="showHelpText">
         <template #field>
-            <Map :center="center" :shape-options="shapeOptions" :readonly="isReadonly" :value="value"
-                 @change="handleChange"/>
+            <Map
+                :center="center"
+                :shape-options="shapeOptions"
+                :readonly="isReadonly"
+                :value="value"
+                @change="handleChange"
+            />
         </template>
     </DefaultField>
 </template>
 
 <script>
-import {HandlesValidationErrors, FormField} from 'laravel-nova';
+import { HandlesValidationErrors, FormField } from 'laravel-nova';
 import Map from './Map';
 
 export default {
-    components: {Map},
+    components: { Map },
     mixins: [FormField, HandlesValidationErrors],
-    props: [
-        'field',
-        'showHelpText',
-    ],
+    props: ['field', 'showHelpText'],
     data: () => ({
         value: [],
     }),
     computed: {
         center() {
-            return {lat: 48.858361, lng: 2.336164};
+            return { lat: 48.858361, lng: 2.336164 };
         },
         shapeOptions() {
             return {
                 clickable: true,
                 draggable: false,
                 editable: true,
-                strokeColor: "#7f1d1d",
+                strokeColor: '#7f1d1d',
                 strokeWeight: 3,
-                fillColor: "#fca5a5",
+                fillColor: '#fca5a5',
                 fillOpacity: 0.6,
                 zIndex: 99999,
             };
@@ -49,7 +51,7 @@ export default {
             this.value = value;
 
             if (this.field) {
-                this.emitFieldValueChange(this.field.attribute, this.value)
+                this.emitFieldValueChange(this.field.attribute, this.value);
             }
         },
     },
