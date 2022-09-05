@@ -41,7 +41,7 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
                 continue;
             }
 
-            if (!is_array($point)) {
+            if (! is_array($point)) {
                 throw new InvalidPoint($point);
             }
 
@@ -95,7 +95,7 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
      */
     public function pointOnVertex(Point|array $point): bool
     {
-        if (!($point instanceof Point)) {
+        if (! ($point instanceof Point)) {
             $point = Point::fromArray($point);
         }
 
@@ -113,7 +113,7 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
      */
     public function contain(Point|array $point): bool
     {
-        if (!($point instanceof Point)) {
+        if (! ($point instanceof Point)) {
             $point = Point::fromArray($point);
         }
 
@@ -163,7 +163,7 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
 
     public function toArray(): array
     {
-        return array_map(fn(Point $point) => $point->toArray(), $this->getPoints());
+        return array_map(fn (Point $point) => $point->toArray(), $this->getPoints());
     }
 
     public function jsonSerialize(): array
