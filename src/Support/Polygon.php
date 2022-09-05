@@ -41,7 +41,7 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
                 continue;
             }
 
-            if (! is_array($point)) {
+            if (!is_array($point)) {
                 throw new InvalidPoint($point);
             }
 
@@ -95,7 +95,7 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
      */
     public function pointOnVertex(Point|array $point): bool
     {
-        if (! ($point instanceof Point)) {
+        if (!($point instanceof Point)) {
             $point = Point::fromArray($point);
         }
 
@@ -113,38 +113,41 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
      */
     public function contain(Point|array $point): bool
     {
-        if (! ($point instanceof Point)) {
+        if (!($point instanceof Point)) {
             $point = Point::fromArray($point);
         }
-
-        $intersections = 0;
-        $count = count($this->points);
 
         if ($this->pointOnVertex($point)) {
             return true;
         }
 
-        for ($i = 1; $i < $count; $i++) {
-            $a = $this->points[$i - 1];
-            $b = $this->points[$i];
+        $intersections = 0;
+        $pointA = $this->points[0];
+        $n = count($this->points);
+        for ($i = 1; $i <= $n; $i++) {
+            $pointB = $this->points[$i % $n];
 
-            // Check if point is on a horizontal polygon boundary
-            if ($a->lat == $b->lat and $a->lat == $point->lat and $point->lng > min($a->lng, $b->lng) and $point->lng < max($a->lng, $b->lng)) {
-                return true;
-            }
-
-            if ($point->lat > min($a->lat, $b->lat) and $point->lat <= max($a->lat, $b->lat) and $point->lng <= max($a->lng, $b->lng) and $a->lat != $b->lat) {
-                $xinters = ($point->lat - $a->lat) * ($b->lng - $a->lng) / ($b->lat - $a->lat) + $a->lng;
-
-                // Check if point is on the polygon boundary (other than horizontal)
-                if ($xinters == $point->lng) {
-                    return true;
-                }
-
-                if ($a->lng == $b->lng || $point->lng <= $xinters) {
+            if (
+                $point->lng >= min($pointA->lng, $pointB->lng)
+                && $point->lng <= max($pointA->lng, $pointB->lng)
+                && $point->lat <= max($pointA->lat, $pointB->lat)
+                && $pointA->lng != $pointB->lng) {
+                $xinters = ($point->lng - $pointA->lng) * ($pointB->lat - $pointA->lat) / ($pointB->lng - $pointA->lng) + $pointA->lat;
+                $pLat = (string)$point->lat;
+                $p1Lat = (string)$pointA->lat;
+                $p2Lat = (string)$pointB->lat;
+                $xintersStr = (string)$xinters;
+                if (($pointA->lat == $pointB->lat) ||
+                    ($point->lat <= $xinters) ||
+                    (bccomp("$p1Lat", "$p2Lat", 14) == 0) ||
+                    (bccomp("$pLat", "$xintersStr", 14) == 0) || // pLat == $xinters
+                    (bccomp("$pLat", "$xintersStr", 14) == -1)   // pLat < $xinters
+                ) {
                     $intersections++;
                 }
             }
+
+            $pointA = $pointB;
         }
 
         return $intersections % 2 != 0;
@@ -160,7 +163,7 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
 
     public function toArray(): array
     {
-        return array_map(fn (Point $point) => $point->toArray(), $this->getPoints());
+        return array_map(fn(Point $point) => $point->toArray(), $this->getPoints());
     }
 
     public function jsonSerialize(): array
