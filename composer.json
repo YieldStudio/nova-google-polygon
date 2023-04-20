@@ -28,7 +28,7 @@
     "require": {
         "php": "^8.1",
         "laravel/nova": "^4.0",
-        "illuminate/support": "^8|^9",
+        "illuminate/support": "^8|^9|^10",
         "ext-bcmath": "*"
     },
     "require-dev": {
