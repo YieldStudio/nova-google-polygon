@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import { HandlesValidationErrors, FormField } from 'laravel-nova';
+import {FormField, HandlesValidationErrors} from 'laravel-nova';
 import Map from './Map';
 
 export default {
-    components: { Map },
+    components: {Map},
     mixins: [FormField, HandlesValidationErrors],
     props: ['field', 'showHelpText'],
     data: () => ({
@@ -25,7 +25,10 @@ export default {
     }),
     computed: {
         center() {
-            return { lat: 48.858361, lng: 2.336164 };
+            return {
+                lat: parseFloat(Nova.config('googlePolygon').center.lat),
+                lng: parseFloat(Nova.config('googlePolygon').center.lng)
+            };
         },
         shapeOptions() {
             return {
