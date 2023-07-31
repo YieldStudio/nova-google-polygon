@@ -4,6 +4,18 @@ All notable changes to `nova-google-polygon` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 0.0.5 - 2023-07-31
+
+### What's Changed
+
+- Add ability to customize center coordinates by @fnematov in https://github.com/YieldStudio/nova-google-polygon/pull/3
+
+### New Contributors
+
+- @fnematov made their first contribution in https://github.com/YieldStudio/nova-google-polygon/pull/3
+
+**Full Changelog**: https://github.com/YieldStudio/nova-google-polygon/compare/0.0.4...0.0.5
+
 ## 0.0.4 - 2023-04-20
 
 ### What's Changed
