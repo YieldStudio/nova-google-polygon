@@ -1,7 +1,7 @@
 <template>
     <PanelItem :index="index" :field="field">
         <template #value>
-            <Map :center="center" :shape-options="shapeOptions" :readonly="true" :value="value" />
+            <Map :center="center" :shape-options="shapeOptions" :readonly="true" :value="value"/>
         </template>
     </PanelItem>
 </template>
@@ -10,14 +10,17 @@
 import Map from './Map';
 
 export default {
-    components: { Map },
+    components: {Map},
     props: ['index', 'field'],
     computed: {
         value() {
             return this.field.value || [];
         },
         center() {
-            return { lat: 48.858361, lng: 2.336164 };
+            return {
+                lat: parseFloat(Nova.config('googlePolygon').center.lat),
+                lng: parseFloat(Nova.config('googlePolygon').center.lng)
+            };
         },
         shapeOptions() {
             return {

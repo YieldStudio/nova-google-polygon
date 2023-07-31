@@ -22,6 +22,7 @@ class FieldServiceProvider extends ServiceProvider
             Nova::provideToScript([
                 'googlePolygon' => [
                     'key' => config('nova-google-polygon.api_key'),
+                    'center' => config('nova-google-polygon.center'),
                 ],
             ]);
         });
