@@ -34,6 +34,8 @@ Add the below to your `.env` file
 
 ```shell
 NOVA_GOOGLE_POLYGON_API_KEY=############################
+NOVA_GOOGLE_POLYGON_CENTER_LAT=48.858361
+NOVA_GOOGLE_POLYGON_CENTER_LNG=2.336164
 ```
 
 ## Usage
@@ -50,10 +52,6 @@ GooglePolygon::make('Delivery area'),
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
